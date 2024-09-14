@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+/* import express, { Request, Response, NextFunction } from 'express';
 import { CreateVandor, GetDeliveryUsers, GetTransactionById, GetTransactions, GetVandorByID, GetVanndors, VerifyDeliveryUser } from '../controllers';
 
 
@@ -26,4 +26,4 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 
 
-export { router as AdminRoute };
+export { router as AdminRoute }; */

@@ -1,18 +1,21 @@
 import express from 'express';
 import App from './services/ExpressApp';
-import dbConnection from './services/Database';
-import { PORT } from './config';
+import 'dotenv/config'
+import mongoose from "mongoose"
 
 const StartServer = async () => {
 
     const app = express();
 
-    await dbConnection()
+ 
 
     await App(app);
 
+    const PORT = process.env.PORT;
+
+
     app.listen(PORT, () => {
-        console.log(`Listening to port 8000 ${PORT}`);
+        console.log(`Server Listening on Port  ${PORT}`);
     })
 }
 

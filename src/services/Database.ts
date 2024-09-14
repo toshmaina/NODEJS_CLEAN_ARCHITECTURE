@@ -1,20 +1,13 @@
  
 import mongoose from 'mongoose'; 
-import { MONGO_URI } from '../config';
+import 'dotenv/config'
+import { promisesWrapper  } from '../utilites/HandleErrors';
 
 export default async() => {
-
-    try {
-        await mongoose.connect(MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        })
-    } catch (err) {
-        console.log(err);
-        process.exit(1);
-    }
-
+ const MONGO_URI = process.env.MONGO_URI;
+ const {error } =  await promisesWrapper(mongoose.connect(MONGO_URI))
+Array.isArray(error) && !error?.[0] && console.log("Connected to MongoDB Database") 
+        
 }
   
   
