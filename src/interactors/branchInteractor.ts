@@ -1,4 +1,4 @@
-import { BranchesDescription, BranchPayload, IBranchInteractor } from "../iBranchInteractor/iBranchInteractor";
+import { BranchesDescription, BranchPayload, IBranchInteractor } from "../interactorInterfaces/iBranchInteractor";
 import { IBranchRepository } from "../iRepositories.ts/iBranchRepository";
 
 export class BranchInteractor implements IBranchInteractor {

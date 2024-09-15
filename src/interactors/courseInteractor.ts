@@ -1,6 +1,6 @@
-import { CoursesDescription, ICourseInteractor } from "../iBranchInteractor/iCourseInteractor";
+import { CoursesDescription, ICourseInteractor } from "../interactorInterfaces/iCourseInteractor";
 import { ICourseRepository } from "../iRepositories.ts/iCourseRepository";
-import { CoursePayload } from "../iBranchInteractor/iCourseInteractor";
+import { CoursePayload } from "../interactorInterfaces/iCourseInteractor";
 
 export class CourseInteractor implements ICourseInteractor {
     private repository : ICourseRepository

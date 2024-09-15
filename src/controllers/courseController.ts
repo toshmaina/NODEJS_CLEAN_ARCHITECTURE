@@ -4,7 +4,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 
 import { Request, Response } from "express";
-import { ICourseInteractor } from "../iBranchInteractor/iCourseInteractor";
+import { ICourseInteractor } from "../interactorInterfaces/iCourseInteractor";
 import { ICourseModel } from "../models/iCourseModel";
 import { CreateCourseDataPayloadValidator, EditCourseDataPayloadValidator, getCoursesDataPayload, deleteCoursePayloadValidator } from "../dto/Course.dto";
 

@@ -4,7 +4,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 
 import { Request, Response } from "express";
-import { ICarInteractor } from "../iBranchInteractor/iCarInteractor";
+import { ICarInteractor } from "../interactorInterfaces/iCarInteractor";
 import { ICarModel } from "../models/iCarModel";
 import { CreateCarDataPayloadValidator, deleteCarPayloadValidator, EditCarDataPayloadValidator, getCarsDataPayload } from "../dto/Car.dto";
 

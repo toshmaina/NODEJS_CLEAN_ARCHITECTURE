@@ -1,5 +1,5 @@
 import { plainToClass } from "class-transformer";
-import { IBranchInteractor } from "../iBranchInteractor/iBranchInteractor";
+import { IBranchInteractor } from "../interactorInterfaces/iBranchInteractor";
 import { createBranchDataPayloadValidator, deleteBranchPayloadValidator, EditBranchDataPayloadValidator, getBranchesDataPayload } from "../dto/Branch.dto";
 import { validate } from "class-validator";
 import { IBranchModel } from "../models/iBranchModel";

@@ -1,5 +1,5 @@
 
-import { CarsDescription, ICarInteractor,CarPayload } from "../iBranchInteractor/iCarInteractor";
+import { CarsDescription, ICarInteractor,CarPayload } from "../interactorInterfaces/iCarInteractor";
 import { ICarRepository } from "../iRepositories.ts/iCarRepository";
 
 export class CarInteractor implements ICarInteractor {
