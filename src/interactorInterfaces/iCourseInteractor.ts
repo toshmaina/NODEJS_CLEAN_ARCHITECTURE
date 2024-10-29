@@ -1,3 +1,5 @@
+import { IBaseResourceInteractor } from "./iBaseInteractor";
+
 export interface  CoursePayload {
     id: number;
     name: string;
@@ -15,9 +17,6 @@ export interface CoursesDescription{
     orderByColumn: string,
     isAsc: string
   }
-export interface ICourseInteractor{
-    createCourse(CoursePayload:CoursePayload);
-    getCourses(CoursesDescriptions:CoursesDescription);
-    updateCourse(CoursePayload:CoursePayload);
-    deleteCourse(id:CoursePayload["id"])
+export interface ICourseInteractor extends IBaseResourceInteractor{
+       
 }

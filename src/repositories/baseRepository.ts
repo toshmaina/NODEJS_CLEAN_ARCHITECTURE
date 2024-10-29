@@ -1,4 +1,5 @@
-import { IBaseRepository, InitData, TModel } from "../iRepositories.ts/iBranchRepository";
+
+import { IBaseRepository, TModel, InitData } from "../iRepositories.ts/iBaseRepository";
 import dbConnection from "../services/Database";
 import { Model } from "mongoose";
 
@@ -22,6 +23,20 @@ import { Model } from "mongoose";
    protected  async getById(id: number){
     try {
         return await this.Model.findOne({id : id});
+    } catch (error) {
+        console.error(error.message)
+    }
+   }
+   protected  async   getByName(name: string){
+    try {
+        return await this.Model.findOne({userLoginName:name})
+    } catch (error) {
+        console.error(error.message)
+    }
+   }
+   protected  async getByPassword(password: string){
+    try {
+        return await this.Model.findOne({password});
     } catch (error) {
         console.error(error.message)
     }

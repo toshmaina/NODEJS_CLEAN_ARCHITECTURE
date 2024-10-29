@@ -1,3 +1,4 @@
+import { IBaseResourceInteractor } from "./iBaseInteractor";
 
 export interface  CarPayload {
     make: string;
@@ -27,9 +28,4 @@ export interface  CarPayload {
         orderByColumn: string,
         isAsc: string
       }
-    export interface ICarInteractor{
-        createCar(carPayload:CarPayload);
-        getCars(caresDescriptions:CarsDescription);
-        updateCar(carPayload:CarPayload);
-        deleteCar(id:CarPayload["id"])
-    }
+    export interface ICarInteractor extends IBaseResourceInteractor{  }

@@ -24,7 +24,7 @@ export class CourseController implements ICourseModel {
         const CoursePayload = req.body;
         const validationError = await this.validateInputPayload({payload:CoursePayload,validator: CreateCourseDataPayloadValidator})
         if(validationError.length) return res.status(400).json(validationError)
-        const createCourseReponse = await this.interactor.createCourse(CoursePayload)
+        const createCourseReponse = await this.interactor.createResource(CoursePayload)
     //Add the conflict exception
        // if(createCourseReponse === "conflict") return res.sendStatus(400)
         if(!createCourseReponse) return res.json({message:"Could not create  the Course!"});
@@ -34,7 +34,7 @@ export class CourseController implements ICourseModel {
         const CoursePayload = req.body;
      const validationError = await this.validateInputPayload({payload:CoursePayload,validator:EditCourseDataPayloadValidator})
         if(validationError?.length) return res.status(400).json(validationError)
-        const  updateCourseResponse = await  this.interactor.updateCourse(CoursePayload);
+        const  updateCourseResponse = await  this.interactor.updateResource(CoursePayload);
         if(!updateCourseResponse.code) return res.json({message:"Could not update the Course!"})
        return res.status(200).json({message:"Updated the Course successfully"})
     }
@@ -42,7 +42,7 @@ export class CourseController implements ICourseModel {
         const CoursePayload = req.body;
         const validationError = await this.validateInputPayload({payload:CoursePayload,validator:getCoursesDataPayload})
        if(validationError?.length) return res.status(400).json(validationError)
-        const  getCourseResponse = await  this.interactor.getCourses(CoursePayload)
+        const  getCourseResponse = await  this.interactor.getResources(CoursePayload)
         if(!getCourseResponse) return res.json({message:"Could not get Course!"})
        return res.status(200).json(getCourseResponse)
     }
@@ -50,7 +50,7 @@ export class CourseController implements ICourseModel {
         const CoursePayload = req.body?.id;
         const validationError = await this.validateInputPayload({payload:CoursePayload,validator:deleteCoursePayloadValidator})
        if(validationError?.length) return res.status(400).json(validationError)
-        const deleteResponse = (await this.interactor.deleteCourse(CoursePayload))
+        const deleteResponse = (await this.interactor.deleteResource(CoursePayload))
        if(!deleteResponse) return   res.json({message:"Could not update the Course!"})
         return res.status(200).json({message:"Course deleted successfully"})
     }

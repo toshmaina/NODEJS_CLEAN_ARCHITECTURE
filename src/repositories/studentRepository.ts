@@ -1,6 +1,4 @@
 import { BaseRepository } from "./baseRepository";
-
-import { TModel } from "../iRepositories.ts/iBranchRepository";
 import { Model } from "mongoose";
 import { studentDoc } from "../entities ";
 import { IStudentRepository } from "../iRepositories.ts/iStudentRepository";

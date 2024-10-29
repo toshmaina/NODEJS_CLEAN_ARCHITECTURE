@@ -1,13 +1,9 @@
 import { plainToClass } from "class-transformer";
-
-
 import { validate } from "class-validator";
-
 import { Request, Response } from "express";
 import { ICarInteractor } from "../interactorInterfaces/iCarInteractor";
 import { ICarModel } from "../models/iCarModel";
 import { CreateCarDataPayloadValidator, deleteCarPayloadValidator, EditCarDataPayloadValidator, getCarsDataPayload } from "../dto/Car.dto";
-
 
 
 export class CarController implements ICarModel {
@@ -24,7 +20,7 @@ export class CarController implements ICarModel {
         const CarPayload = req.body;
         const validationError = await this.validateInputPayload({payload:CarPayload,validator: CreateCarDataPayloadValidator})
         if(validationError.length) return res.status(400).json(validationError)
-        const createCarReponse = await this.interactor.createCar(CarPayload)
+        const createCarReponse = await this.interactor.createResource(CarPayload)
     //Add the conflict exception
        // if(createCarReponse === "conflict") return res.sendStatus(400)
         if(!createCarReponse) return res.json({message:"Could not create  the Car!"});
@@ -34,7 +30,7 @@ export class CarController implements ICarModel {
         const CarPayload = req.body;
      const validationError = await this.validateInputPayload({payload:CarPayload,validator:EditCarDataPayloadValidator})
         if(validationError?.length) return res.status(400).json(validationError)
-        const  updateCarResponse = await  this.interactor.updateCar(CarPayload);
+        const  updateCarResponse = await  this.interactor.updateResource(CarPayload);
         if(!updateCarResponse.code) return res.json({message:"Could not update the Car!"})
        return res.status(200).json({message:"Updated the Car successfully"})
     }
@@ -42,7 +38,7 @@ export class CarController implements ICarModel {
         const CarPayload = req.body;
         const validationError = await this.validateInputPayload({payload:CarPayload,validator:getCarsDataPayload})
        if(validationError?.length) return res.status(400).json(validationError)
-        const  getCarResponse = await  this.interactor.getCars(CarPayload)
+        const  getCarResponse = await  this.interactor.getResources(CarPayload)
         if(!getCarResponse) return res.json({message:"Could not get Car!"})
        return res.status(200).json(getCarResponse)
     }
@@ -50,7 +46,7 @@ export class CarController implements ICarModel {
         const CarPayload = req.body?.id;
         const validationError = await this.validateInputPayload({payload:CarPayload,validator:deleteCarPayloadValidator})
        if(validationError?.length) return res.status(400).json(validationError)
-        const deleteResponse = (await this.interactor.deleteCar(CarPayload))
+        const deleteResponse = (await this.interactor.deleteResource(CarPayload))
        if(!deleteResponse) return   res.json({message:"Could not update the Car!"})
         return res.status(200).json({message:"Car deleted successfully"})
     }

@@ -1,3 +1,5 @@
+import { IBaseResourceInteractor } from "./iBaseInteractor";
+
 
 export interface  BranchPayload {
 name: string;
@@ -13,9 +15,6 @@ export interface BranchesDescription{
     orderByColumn: string,
     isAsc: string
   }
-export interface IBranchInteractor{
-    createBranch(branchPayload:BranchPayload);
-    getBranches(branchesDescriptions:BranchesDescription);
-    updateBranch(branchPayload:BranchPayload);
-    deleteBranch(id:BranchPayload["id"])
+export interface IBranchInteractor extends IBaseResourceInteractor {
+
 }

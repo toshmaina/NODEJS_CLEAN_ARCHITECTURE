@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { IBranchRepository, TModel } from "../iRepositories.ts/iBranchRepository";
+import { IBranchRepository } from "../iRepositories.ts/iBranchRepository";
 import { BaseRepository } from "./baseRepository";
 import { branchDoc } from "../entities ";
 

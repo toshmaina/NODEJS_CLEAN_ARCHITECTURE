@@ -1,6 +1,5 @@
 import { BaseRepository } from "./baseRepository";
 import { ICarRepository } from "../iRepositories.ts/iCarRepository";
-import { TModel } from "../iRepositories.ts/iBranchRepository";
 import { Model } from "mongoose";
 import { carDoc } from "../entities /Car";
 

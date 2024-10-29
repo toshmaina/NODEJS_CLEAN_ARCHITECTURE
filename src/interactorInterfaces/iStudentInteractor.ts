@@ -1,3 +1,5 @@
+import { IBaseResourceInteractor } from "./iBaseInteractor"
+
 export interface StudentPayload {
     id:number,
     name:string,
@@ -22,9 +24,6 @@ export interface StudentsDescription{
     orderByColumn: string,
     isAsc: string
   }
-export interface IStudentInteractor{
-    createStudent(studentPayload:StudentPayload);
-    getStudents(studentsDescriptions:StudentsDescription);
-    updateStudent(studentPayload:StudentPayload);
-    deleteStudent(id:StudentPayload["id"])
+export interface IStudentInteractor extends IBaseResourceInteractor{
+       
 }

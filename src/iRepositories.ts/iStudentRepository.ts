@@ -1,3 +1,4 @@
-import { IBaseRepository } from "./iBranchRepository";
+import { IBaseRepository } from "./iBaseRepository";
+
 
 export interface IStudentRepository extends IBaseRepository{}
