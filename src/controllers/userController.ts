@@ -8,6 +8,7 @@ import { comparePasswords, GeneratePassword, GenerateSalt, GenerateSignature, Va
 import { User } from "../entities /User";
 import { BulkCountryUpdatePage } from "twilio/lib/rest/voice/v1/dialingPermissions/bulkCountryUpdate";
 import bcrypt from 'bcrypt';
+import convertParamObjectToNativeObject from "../utilites/handleParamObject";
 
 
 export class UserController implements IUserModel {
@@ -26,7 +27,8 @@ export class UserController implements IUserModel {
         const validationError = await this.validateInputPayload({payload:signInDataPayload,validator: SignInUserDataPayloadValidator})
         if(validationError.length) return res.status(400).json(validationError)
         const signInUserResponse = await this.interactor.signIn(signInDataPayload) 
-        if(!signInUserResponse.userTrueName) return res.json({message:"Wrong UserName or password!"});
+     console.log(signInUserResponse.userNo)
+        if(!signInUserResponse) return res.json({message:"Wrong UserName or password!"});
          const {password: enteredPassword} = signInDataPayload;
         const {password: savedPassword,userNo,userRole,userTrueName,userLoginName} = signInUserResponse;
         const isPasswordValid =  await comparePasswords(enteredPassword,savedPassword)
@@ -66,12 +68,14 @@ export class UserController implements IUserModel {
        return res.status(200).json({message:"Updated the User successfully"})
     }
    public async  getUsers(req: Request, res: Response) {
-        const UserPayload = req.body;
-        const validationError = await this.validateInputPayload({payload:UserPayload,validator:getUsersDataPayload})
-       if(validationError?.length) return res.status(400).json(validationError)
-        const  getUserResponse = await  this.interactor.getResources(UserPayload)
-        if(!getUserResponse) return res.json({message:"Could not get User!"})
-       return res.status(200).json(getUserResponse)
+    const {...usersPayloadParamObject} = req.query
+    const usersPayloadNativeObject = convertParamObjectToNativeObject(usersPayloadParamObject)
+    if(!usersPayloadNativeObject) return res.sendStatus(400)
+    const validationError = await this.validateInputPayload({payload:usersPayloadNativeObject,validator:getUsersDataPayload})
+   if(validationError?.length) return res.status(400).json(validationError)
+    const  getUsersResponse = await  this.interactor.getResources(usersPayloadNativeObject)
+        if(!getUsersResponse) return res.json({message:"Could not get User!"})
+       return res.status(200).json(getUsersResponse)
     }
     public async deleteUser(req: Request, res: Response) {
         const UserPayload = req.body?.id;

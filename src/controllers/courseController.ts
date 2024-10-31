@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import { ICourseInteractor } from "../interactorInterfaces/iCourseInteractor";
 import { ICourseModel } from "../models/iCourseModel";
 import { CreateCourseDataPayloadValidator, EditCourseDataPayloadValidator, getCoursesDataPayload, deleteCoursePayloadValidator } from "../dto/Course.dto";
+import convertParamObjectToNativeObject from "../utilites/handleParamObject";
 
 
 
@@ -39,12 +40,14 @@ export class CourseController implements ICourseModel {
        return res.status(200).json({message:"Updated the Course successfully"})
     }
    public async  getCourses(req: Request, res: Response) {
-        const CoursePayload = req.body;
-        const validationError = await this.validateInputPayload({payload:CoursePayload,validator:getCoursesDataPayload})
-       if(validationError?.length) return res.status(400).json(validationError)
-        const  getCourseResponse = await  this.interactor.getResources(CoursePayload)
-        if(!getCourseResponse) return res.json({message:"Could not get Course!"})
-       return res.status(200).json(getCourseResponse)
+    const {...coursePayloadParamObject} = req.query
+    const CoursePayloadNativeObject = convertParamObjectToNativeObject(coursePayloadParamObject)
+    if(!CoursePayloadNativeObject) return res.sendStatus(400)
+    const validationError = await this.validateInputPayload({payload:CoursePayloadNativeObject,validator:getCoursesDataPayload})
+   if(validationError?.length) return res.status(400).json(validationError)
+    const  getCoursesResponse = await  this.interactor.getResources(CoursePayloadNativeObject)
+    if(!getCoursesResponse) return res.json({message:"Could not get Course!"})
+    return res.status(200).json(getCoursesResponse)
     }
     public async deleteCourse(req: Request, res: Response) {
         const CoursePayload = req.body?.id;

@@ -8,6 +8,7 @@ import { UserRoutes } from '../routes/userRoute';
 import helmet from 'helmet';
 import { corsOptions, helmetOptions } from '../config/allowedOrigins';
 import cors from 'cors'
+import { StudentsRoutes } from '../routes/studentsRoutes';
  
 
 export default async(app: Application) => {
@@ -29,6 +30,8 @@ export default async(app: Application) => {
      app.use(CourseRoutes)
 
      app.use(UserRoutes)
+
+     app.use(StudentsRoutes)
 
      
 

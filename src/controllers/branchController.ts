@@ -4,6 +4,7 @@ import { createBranchDataPayloadValidator, deleteBranchPayloadValidator, EditBra
 import { validate } from "class-validator";
 import { IBranchModel } from "../models/iBranchModel";
 import { Request, Response } from "express";
+import convertParamObjectToNativeObject from "../utilites/handleParamObject";
 
 export class BranchController implements IBranchModel {
     private interactor: IBranchInteractor
@@ -34,10 +35,12 @@ export class BranchController implements IBranchModel {
        return res.status(200).json({message:"Updated the user successfully"})
     }
    public async  getBranches(req: Request, res: Response) {
-        const branchPayload = req.body;
-        const validationError = await this.validateInputPayload({payload:branchPayload,validator:getBranchesDataPayload})
+        const {...branchPayloadParamObject} = req.query
+        const branchPayloadNativeObject = convertParamObjectToNativeObject(branchPayloadParamObject)
+        if(!branchPayloadNativeObject) return res.sendStatus(400)
+        const validationError = await this.validateInputPayload({payload:branchPayloadNativeObject,validator:getBranchesDataPayload})
        if(validationError?.length) return res.status(400).json(validationError)
-        const  getBranchesResponse = await  this.interactor.getResources(branchPayload)
+        const  getBranchesResponse = await  this.interactor.getResources(branchPayloadNativeObject)
         if(!getBranchesResponse) return res.json({message:"Could not get Branches!"})
        return res.status(200).json(getBranchesResponse)
     }
