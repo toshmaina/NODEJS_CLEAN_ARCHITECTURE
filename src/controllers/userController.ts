@@ -60,8 +60,10 @@ export class UserController implements IUserModel {
        return res.status(200).json(createUserReponse);
     }
    public async updateUser(req: Request, res: Response) {
-        const UserPayload = req.body;
+        const {userNo, ...otherKeys} = req.body;
+        const UserPayload = {userNo:+userNo ,...otherKeys};
      const validationError = await this.validateInputPayload({payload:UserPayload,validator:EditUserDataPayloadValidator})
+     console.log(validationError)
         if(validationError?.length) return res.status(400).json(validationError)
         const  updateUserResponse = await  this.interactor.updateResource(UserPayload);
         if(!updateUserResponse.code) return res.json({message:"Could not update the User!"})

@@ -8,20 +8,20 @@ export class EditBranchDataPayloadValidator {
     @IsString()
     name: string;
 
-    @IsOptional()
+    @IsNotEmpty()
     @IsNumber()
     id: number;
 
-    @IsString()
     @IsOptional()
+    @IsString()
     code: string;
 
     @IsOptional()
     @IsPhoneNumber('KE')
     phoneNumber: string;
 
-    @IsString()
     @IsOptional()
+    @IsString()
     location: string;
 }
 

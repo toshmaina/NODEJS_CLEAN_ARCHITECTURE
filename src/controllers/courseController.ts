@@ -8,6 +8,7 @@ import { ICourseInteractor } from "../interactorInterfaces/iCourseInteractor";
 import { ICourseModel } from "../models/iCourseModel";
 import { CreateCourseDataPayloadValidator, EditCourseDataPayloadValidator, getCoursesDataPayload, deleteCoursePayloadValidator } from "../dto/Course.dto";
 import convertParamObjectToNativeObject from "../utilites/handleParamObject";
+import { Course } from "../entities ";
 
 
 
@@ -32,10 +33,14 @@ export class CourseController implements ICourseModel {
        return res.status(200).json(createCourseReponse);
     }
    public async updateCourse(req: Request, res: Response) {
-        const CoursePayload = req.body;
-     const validationError = await this.validateInputPayload({payload:CoursePayload,validator:EditCourseDataPayloadValidator})
+        const {id, noOfPracticals,...otherKeys}  = req.body;
+        const coursePayload = {id:+id, noOfPracticals:+noOfPracticals,...otherKeys};
+        if(!coursePayload) return res.sendStatus(400);
+     const validationError = await this.validateInputPayload({payload:coursePayload,validator:EditCourseDataPayloadValidator})
+     console.log(validationError)
         if(validationError?.length) return res.status(400).json(validationError)
-        const  updateCourseResponse = await  this.interactor.updateResource(CoursePayload);
+        
+        const  updateCourseResponse = await  this.interactor.updateResource(coursePayload);
         if(!updateCourseResponse.code) return res.json({message:"Could not update the Course!"})
        return res.status(200).json({message:"Updated the Course successfully"})
     }

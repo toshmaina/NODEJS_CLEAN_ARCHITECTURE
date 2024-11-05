@@ -27,17 +27,21 @@ export class BranchController implements IBranchModel {
        return res.status(200).json(createBranchReponse);
     }
    public async updateBranch(req: Request, res: Response) {
-        const branchPayload = req.body;
+        const {id, ...otherKeys} = req.body;
+        const branchPayload = {id:+id ,...otherKeys};
+        if(!branchPayload) return res.sendStatus(400);
      const validationError = await this.validateInputPayload({payload:branchPayload,validator:EditBranchDataPayloadValidator})
+     console.log(validationError)
         if(validationError?.length) return res.status(400).json(validationError)
+            //response should handle the 404 status situations passed in the repository
         const  updateUserResponse = await  this.interactor.updateResource(branchPayload);
         if(!updateUserResponse.code) return res.json({message:"Could not update the User!"})
        return res.status(200).json({message:"Updated the user successfully"})
     }
    public async  getBranches(req: Request, res: Response) {
-        const {...branchPayloadParamObject} = req.query
-        const branchPayloadNativeObject = convertParamObjectToNativeObject(branchPayloadParamObject)
-        if(!branchPayloadNativeObject) return res.sendStatus(400)
+        const {...branchPayloadParamObject} = req.query;
+        if(!branchPayloadParamObject) return res.sendStatus(400);
+        var branchPayloadNativeObject = convertParamObjectToNativeObject(branchPayloadParamObject);
         const validationError = await this.validateInputPayload({payload:branchPayloadNativeObject,validator:getBranchesDataPayload})
        if(validationError?.length) return res.status(400).json(validationError)
         const  getBranchesResponse = await  this.interactor.getResources(branchPayloadNativeObject)

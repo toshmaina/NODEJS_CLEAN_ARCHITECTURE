@@ -39,7 +39,9 @@ export class StudentController implements IStudentModel {
        return res.status(200).json(createStudentReponse);
     }
    public async updateStudent(req: Request, res: Response) {
-        const StudentPayload = req.body;
+       if(!req.body?.id) return res.sendStatus(400);
+        const {id,idNo, admissionNo, ...otherKeys} = req.body;  
+        const StudentPayload = {id:+id, idNo:+idNo, admissionNo:+admissionNo, ...otherKeys};  
      const validationError = await this.validateInputPayload({payload:StudentPayload,validator:EditStudentDataPayloadValidator})
         if(validationError?.length) return res.status(400).json(validationError)
         const  updateStudentResponse = await  this.interactor.updateResource(StudentPayload);

@@ -9,8 +9,8 @@ export class EditStudentDataPayloadValidator {
     @IsString()
     name: string;
 
-    @IsNumber()
     @IsOptional()
+    @IsNumber()
     admissionNo:number;
 
     @IsOptional()
@@ -25,19 +25,20 @@ export class EditStudentDataPayloadValidator {
     @IsString()
     gender:string;
 
-    @IsNumber()
     @IsOptional()
+    @IsNumber()
     idNo:number;
     
-    @IsString()
     @IsOptional()
+    @IsString()
     courseName:string;
 
-    @IsString()
     @IsOptional()
+    @IsString()
     branchName:string;
-    @IsString()
+
     @IsOptional()
+    @IsString()
     courseStatus:string;
 
     @IsOptional()

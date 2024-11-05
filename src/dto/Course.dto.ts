@@ -60,8 +60,9 @@ export class getCoursesDataPayload {
     noOfPracticals: number;
   }
   export class EditCourseDataPayloadValidator {
+    
+    @IsNotEmpty()
     @IsNumber()
-    @IsOptional()
     @IsPositive()
     id: number;
 
@@ -77,17 +78,18 @@ export class getCoursesDataPayload {
       })
     cost: number;
 
-    @IsString()
     @IsOptional()
+    @IsString()
     code: string;
 
-    @IsString()
     @IsOptional()
-    @Matches(/^\d+ (month|year|week)s?$/, { message: 'Duration must be in the format "X months" , "X years" or "X weeks.' })
+    @IsString()
+    @Matches(/^\d+ (Month|Year|Week)s?$/, { message: 'Duration must be in the format "X months" , "X years" or "X weeks.' })
     duration: string;
-    
+
+    @IsOptional()
     @IsNumber()
     @IsPositive()
-    @IsOptional()
+   
     noOfPracticals: number;
   }
