@@ -80,10 +80,13 @@ export class UserController implements IUserModel {
        return res.status(200).json(getUsersResponse)
     }
     public async deleteUser(req: Request, res: Response) {
-        const UserPayload = req.body?.id;
-        const validationError = await this.validateInputPayload({payload:UserPayload,validator:deleteUserPayloadValidator})
+        const {...userPayloadParamObject} = req.query;
+        if(!userPayloadParamObject.userNo) return res.sendStatus(400);
+        const  {userNo:userId} = convertParamObjectToNativeObject(userPayloadParamObject);
+        const validationError = await this.validateInputPayload({payload:userId,validator:deleteUserPayloadValidator})
        if(validationError?.length) return res.status(400).json(validationError)
-        const deleteResponse = (await this.interactor.deleteResource(UserPayload))
+        const deleteResponse = await this.interactor.deleteResource(userId)
+     console.log(deleteResponse)
        if(!deleteResponse) return   res.json({message:"Could not update the User!"})
         return res.status(200).json({message:"User deleted successfully"})
     }

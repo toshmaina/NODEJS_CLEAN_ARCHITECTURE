@@ -49,11 +49,13 @@ export class BranchController implements IBranchModel {
        return res.status(200).json(getBranchesResponse)
     }
     public async deleteBranch(req: Request, res: Response) {
-        const branchPayload = req.body?.id;
-        const validationError = await this.validateInputPayload({payload:branchPayload,validator:deleteBranchPayloadValidator})
+        const {...branchPayloadParamObject} = req.query;
+        if(!branchPayloadParamObject.id) return res.sendStatus(400);
+        const  {id:branchId} = convertParamObjectToNativeObject(branchPayloadParamObject);
+        const validationError = await this.validateInputPayload({payload:branchId,validator:deleteBranchPayloadValidator})
        if(validationError?.length) return res.status(400).json(validationError)
-        const deleteResponse = (await this.interactor.deleteResource(branchPayload))
-       if(!deleteResponse) return   res.json({message:"Could not update the User!"})
+        const deleteResponse = (await this.interactor.deleteResource(branchId))
+       if(!deleteResponse) return   res.json({message:"Could not delete the User!"})
         return res.status(200).json({message:"User deleted successfully"})
     }
 }

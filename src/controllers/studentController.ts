@@ -59,10 +59,12 @@ export class StudentController implements IStudentModel {
        return res.status(200).json(getStudentsResponse)
     }
     public async deleteStudent(req: Request, res: Response) {
-        const StudentPayload = req.body?.id;
-        const validationError = await this.validateInputPayload({payload:StudentPayload,validator:deleteStudentPayloadValidator})
+        const {...studentPayloadParamObject} = req.query;
+        if(!studentPayloadParamObject.id) return res.sendStatus(400);
+        const  {id:studentId} = convertParamObjectToNativeObject(studentPayloadParamObject);
+        const validationError = await this.validateInputPayload({payload:studentId,validator:deleteStudentPayloadValidator})
        if(validationError?.length) return res.status(400).json(validationError)
-        const deleteResponse = (await this.interactor.deleteResource(StudentPayload))
+        const deleteResponse = (await this.interactor.deleteResource(studentId))
        if(!deleteResponse) return   res.json({message:"Could not update the Student!"})
         return res.status(200).json({message:"Student deleted successfully"})
     }

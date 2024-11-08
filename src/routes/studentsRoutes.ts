@@ -13,7 +13,7 @@ const controller = new StudentController(interactor);
 
 router.get('/students/list', controller.getStudents.bind(controller))
 
-router.delete('/students/delete',controller.deleteStudent.bind(controller))
+router.delete('/student/delete',controller.deleteStudent.bind(controller))
 router.patch('/student/edit',controller.updateStudent.bind(controller))
 router.post("/students/add",controller.createStudent.bind(controller))
 export { router as StudentsRoutes}

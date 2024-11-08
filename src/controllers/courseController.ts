@@ -55,10 +55,12 @@ export class CourseController implements ICourseModel {
     return res.status(200).json(getCoursesResponse)
     }
     public async deleteCourse(req: Request, res: Response) {
-        const CoursePayload = req.body?.id;
-        const validationError = await this.validateInputPayload({payload:CoursePayload,validator:deleteCoursePayloadValidator})
+        const {...coursePayloadParamObject} = req.query;
+        if(!coursePayloadParamObject.id) return res.sendStatus(400);
+        const  {id:courseId} = convertParamObjectToNativeObject(coursePayloadParamObject);
+        const validationError = await this.validateInputPayload({payload:courseId,validator:deleteCoursePayloadValidator})
        if(validationError?.length) return res.status(400).json(validationError)
-        const deleteResponse = (await this.interactor.deleteResource(CoursePayload))
+        const deleteResponse = (await this.interactor.deleteResource(courseId))
        if(!deleteResponse) return   res.json({message:"Could not update the Course!"})
         return res.status(200).json({message:"Course deleted successfully"})
     }
