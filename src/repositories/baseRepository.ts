@@ -1,7 +1,9 @@
 
 import { IBaseRepository, TModel, InitData } from "../iRepositories.ts/iBaseRepository";
 import dbConnection from "../services/Database";
-import { Model } from "mongoose";
+import mongoose, { Model,MongooseError } from "mongoose";
+
+
 
  export  abstract class BaseRepository implements IBaseRepository {
     //protected Database = 
@@ -51,14 +53,13 @@ import { Model } from "mongoose";
         }
     }
     public async create(payload:Record<string,any>) {
-            try {
-                
+             try {
                 const resourceExits = await this.getById(payload.id);
-                console.log(resourceExits)
-                if(!resourceExits) return  await this.Model.create(payload);
+                if(resourceExits) return { error: 'Document with the same id already exists', statusCode: 409 };
+                return  await this.Model.create(payload);
             } catch (error) {
-                console.error(error.message)
-            };
+             console.error(error.message)
+              }  
      }
 
      public async update(payload:Record<string,any>) {

@@ -5,6 +5,7 @@ import { validate } from "class-validator";
 import { IBranchModel } from "../models/iBranchModel";
 import { Request, Response } from "express";
 import convertParamObjectToNativeObject from "../utilites/handleParamObject";
+import { generateFourDigitRandomNumber } from "../utilites/generateRandomId";
 
 export class BranchController implements IBranchModel {
     private interactor: IBranchInteractor
@@ -17,12 +18,15 @@ export class BranchController implements IBranchModel {
         return  await validate(inputPayload, {validationError: { target: true}})
     }
    public async createBranch(req: Request, res: Response) {
-        const branchPayload = req.body;
+        if(!req.body?.code) return res.sendStatus(400);
+        const id = generateFourDigitRandomNumber();
+        const {...otherKeys}= req.body;
+        const branchPayload = {id, ...otherKeys}
         const validationError = await this.validateInputPayload({payload:branchPayload,validator:createBranchDataPayloadValidator})
         if(validationError?.length) return res.status(400).json(validationError)
         const createBranchReponse = await this.interactor.createResource(branchPayload)
-    //Add the conflict exception
-       // if(createBranchReponse === "conflict") return res.sendStatus(400)
+        // conflict exception
+        if (createBranchReponse?.code === 409 ) return res.sendStatus(409);
         if(!createBranchReponse) return res.json({message:"Could not create  the User!"});
        return res.status(200).json(createBranchReponse);
     }

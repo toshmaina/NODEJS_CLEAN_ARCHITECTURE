@@ -98,21 +98,21 @@ export class CreateStudentDataPayloadValidator {
     @IsNotEmpty()
     courseStatus:string;
 
-    @IsNotEmpty()
+/*     @IsNotEmpty()
     @IsCurrency({
         currencyCode: 'KES', 
         allowNaN: false, 
         allowEmpty: false, 
       })
-    balance:number;
+    balance:number; */
     
-    @IsNotEmpty()
+/*     @IsNotEmpty()
     @IsCurrency({
         currencyCode: 'KES', 
         allowNaN: false, 
         allowEmpty: false, 
       })
-    totalPayment:number
+    totalPayment:number */
 }
 
 

@@ -28,14 +28,17 @@ export class StudentController implements IStudentModel {
         const inputPayload = plainToClass(validator, payload);
         return await validate(inputPayload, {validationError: { target: true}});
     }
-   public async createStudent(req: Request, res: Response) {
-        const StudentPayload = req.body;
+    public async createStudent(req: Request, res: Response) {
+        if(!req.body?.id) return res.sendStatus(400);
+        const {id,idNo, admissionNo, ...otherKeys} = req.body;  
+        const StudentPayload = {id:+id, idNo:+idNo, admissionNo:+admissionNo, ...otherKeys};  
         const validationError = await this.validateInputPayload({payload:StudentPayload,validator: CreateStudentDataPayloadValidator})
+        console.log(validationError)
         if(validationError.length) return res.status(400).json(validationError)
         const createStudentReponse = await this.interactor.createResource(StudentPayload)
-    //Add the conflict exception
-       // if(createStudentReponse === "conflict") return res.sendStatus(400)
         if(!createStudentReponse) return res.json({message:"Could not create  the Student!"});
+        //Add the conflict exception
+        if (createStudentReponse?.statusCode === 409 ) return res.sendStatus(409);
        return res.status(200).json(createStudentReponse);
     }
    public async updateStudent(req: Request, res: Response) {
