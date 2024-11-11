@@ -4,6 +4,7 @@ pipeline {
     stage('Clone') {
       steps {
         git(url: 'git@github.com:toshmaina/NODEJS_CLEAN_ARCHITECTURE.git', branch: 'main')
+        git(url: 'git@github.com:toshmaina/NODEJS_CLEAN_ARCHITECTURE.git', branch: 'main', credentialsId: 'Jenkins_access_github_private_key')
       }
     }
 
