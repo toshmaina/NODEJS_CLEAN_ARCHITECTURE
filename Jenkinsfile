@@ -1,10 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Clone') {
+    stage('GitClone') {
       steps {
-        git(url: 'git@github.com:toshmaina/NODEJS_CLEAN_ARCHITECTURE.git', branch: 'main')
-        git(url: 'git@github.com:toshmaina/NODEJS_CLEAN_ARCHITECTURE.git', branch: 'main', credentialsId: 'Jenkins_access_github_private_key')
+        git(url: 'git@github.com:toshmaina/NODEJS_CLEAN_ARCHITECTURE.git', branch: 'main', credentialsId: 'my_jenkins_github_id')
       }
     }
 
