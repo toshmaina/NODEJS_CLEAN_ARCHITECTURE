@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Clone') {
       steps {
-        sh 'echo "Hello World"'
+        git(url: 'git@github.com:toshmaina/NODEJS_CLEAN_ARCHITECTURE.git', branch: 'main')
       }
     }
 
