@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Clone Code') {
+    stage('Clone') {
       steps {
-        git(url: 'https://github.com/toshmaina/NODEJS_CLEAN_ARCHITECTURE', branch: 'main')
+        sh 'echo "Hello World"'
       }
     }
 
