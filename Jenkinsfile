@@ -14,8 +14,19 @@ pipeline {
     }
 
     stage('Test Docker') {
-      steps {
-        sh 'docker --version'
+      parallel {
+        stage('Test Docker') {
+          steps {
+            sh 'docker --version'
+          }
+        }
+
+        stage('Docker Test log') {
+          steps {
+            sh 'echo "Testing Docker"'
+          }
+        }
+
       }
     }
 
