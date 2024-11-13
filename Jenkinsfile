@@ -18,6 +18,11 @@ pipeline {
         sh 'ls -al'
       }
     }
+    stage("Checks on docker"){
+     steps{
+       sh 'docker --version'
+     }
+    }
 
   }
 }
