@@ -13,15 +13,10 @@ pipeline {
       }
     }
 
-    stage('List files') {
+    stage('Checks on docker') {
       steps {
-        sh 'ls -al'
+        sh 'docker --version'
       }
-    }
-    stage("Checks on docker"){
-     steps{
-       sh 'docker --version'
-     }
     }
 
   }
