@@ -1,13 +1,12 @@
 {
-  "name": "food_order_backend",
+  "name": "safelink_driving_school",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "start": "node dist/index.js",
-    "build": "tsc -p .",
-    "postinstall": "npm run build"
+    "start": "npm run build && node dist/index.js",
+    "build": "tsc -p ."
   },
   "engines": {
     "node": "20.16.0",
