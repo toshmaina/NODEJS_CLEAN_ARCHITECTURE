@@ -10,7 +10,11 @@ pipeline {
         sh 'echo "Hello from Jenkins"'
       }
     }
-
+   stage('Check docker  Version') {
+      steps {
+        sh 'docker --version'
+      }
+   }
     stage('Clone The Repo') {
       steps {
         git(url: 'https://github.com/toshmaina/NODEJS_CLEAN_ARCHITECTURE', branch: 'main')
