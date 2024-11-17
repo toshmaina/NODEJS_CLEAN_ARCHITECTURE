@@ -1,12 +1,11 @@
 pipeline {
-  agent any
-  stages {
-    agent{
+   agent{
       docker{
         image 'node:16-alpine'
         reuseNode true
       }
     }
+  stages {
     stage('Welcome Greeting') {
       steps {
         sh 'echo "Hello from Jenkins"'
@@ -42,10 +41,10 @@ pipeline {
     //   }
     // }
 
-    stage('Checks on docker') {
-      steps {
-        sh 'docker --version'
-      }
+    // stage('Checks on docker') {
+    //   steps {
+    //     sh 'docker --version'
+    //   }
     }
 
   }
