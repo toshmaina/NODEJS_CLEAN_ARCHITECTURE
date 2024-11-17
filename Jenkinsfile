@@ -42,5 +42,11 @@ pipeline {
     //   }
     // }
 
+    stage('Checks on docker') {
+      steps {
+        sh 'docker --version'
+      }
+    }
+
   }
 }
