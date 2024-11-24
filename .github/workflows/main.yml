@@ -34,12 +34,25 @@ jobs:
       id-token: write
       actions: read
       deployments: write
-      packages: read
+      packages: write
       pages: write
       pull-requests: write
       statuses: write
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: | 
+          npm ci
+          echo "Installed dependencies using npm ci for deployment"
+
       - name: Deploy to Netlify
         id: deployment
         uses: jsmrcaga/action-netlify-deploy@v2.0.0
