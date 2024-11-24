@@ -29,6 +29,9 @@ jobs:
           npm ci
           echo "Installed dependencies using npm ci for production build"
       - name: Build The App
+        run: |
+          npm run build
+          echo "Built the app"
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
       - name: Deploy to Netlify
