@@ -34,7 +34,7 @@ jobs:
       id-token: write
       actions: read
       deployments: write
-      packages: write
+      packages: read
       pages: write
       pull-requests: write
       statuses: write
