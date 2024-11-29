@@ -2,7 +2,7 @@ import { CorsOptions } from "cors";
 
 export const whiteList = 
 	process.env.NODE_ENV === "production"
-		? ["https://www.writers.com", "https://www.mySite.com"]
+		? ["https://writersapi-clean-arch.vercel.app/", "https://www.mySite.com"]
 		: ["http://localhost:8080", "http://localhost:3000"]
 
 
