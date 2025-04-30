@@ -27,11 +27,12 @@ export class UserController implements IUserModel {
         const validationError = await this.validateInputPayload({payload:signInDataPayload,validator: SignInUserDataPayloadValidator})
         if(validationError.length) return res.status(400).json(validationError)
         const signInUserResponse = await this.interactor.signIn(signInDataPayload) 
-     console.log(signInUserResponse.userNo)
+     //console.log(signInUserResponse.userNo)
         if(!signInUserResponse) return res.json({message:"Wrong UserName or password!"});
          const {password: enteredPassword} = signInDataPayload;
         const {password: savedPassword,userNo,userRole,userTrueName,userLoginName} = signInUserResponse;
         const isPasswordValid =  await comparePasswords(enteredPassword,savedPassword)
+        
        if(!isPasswordValid) return res.json({message:"Invalid Password"})
         
         const Authorization = await GenerateSignature({
@@ -53,11 +54,21 @@ export class UserController implements IUserModel {
         const UserPayload = req.body;
         const validationError = await this.validateInputPayload({payload:UserPayload,validator: CreateUserDataPayloadValidator})
         if(validationError.length) return res.status(400).json(validationError)
-        const createUserReponse = await this.interactor.createResource(UserPayload)
-    //Add the conflict exception
-       // if(createUserReponse === "conflict") return res.sendStatus(400)
-        if(!createUserReponse) return res.json({message:"Could not create  the User!"});
-       return res.status(200).json(createUserReponse);
+        
+        const { password } = UserPayload;
+        const salt = await GenerateSalt();
+        const hashedPassword = await GeneratePassword(password, salt);
+
+        const userDataWithHashedPassword = { ...UserPayload, password: hashedPassword };
+
+        const createUserResponse = await this.interactor.createResource(userDataWithHashedPassword);
+
+        //Add the conflict exception
+        if(!createUserResponse) return res.json({message:"Could not create  the User!"});
+        
+        if(createUserResponse?.statusCode === 409) return res.sendStatus(409); // conflict exception
+
+       return res.status(200).json(createUserResponse);
     }
    public async updateUser(req: Request, res: Response) {
         const {userNo, ...otherKeys} = req.body;
