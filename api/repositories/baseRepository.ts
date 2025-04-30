@@ -55,7 +55,7 @@ import mongoose, { Model,MongooseError } from "mongoose";
     public async create(payload:Record<string,any>) {
              try {
                 const resourceExits = await this.getById(payload.id);
-                if(resourceExits) return { error: 'Document with the same id already exists', statusCode: 409 };
+               if(resourceExits) return { error: 'Document with the same id already exists', statusCode: 409 };
                 return  await this.Model.create(payload);
             } catch (error) {
              console.error(error.message)

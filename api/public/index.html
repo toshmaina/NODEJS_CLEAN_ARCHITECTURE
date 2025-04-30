@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Documentation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #00698f;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .api-description {
+      background-color: #f7f7f7;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>API Documentation</h1>
+  <div class="api-description">
+    <p>Welcome to our API documentation!</p>
+    <p>This API provides a simple RESTful interface for interacting with our application. It allows you to perform CRUD (Create, Read, Update, Delete) operations on our data.</p>
+    <p>The API is built using Node.js and Express.js, and is deployed on Vercel.</p>
+    <p>Below are the available endpoints:</p>
+    <ul>
+      <li><strong>GET /api/data</strong>: Retrieves a list of all data</li>
+      <li><strong>POST /api/data</strong>: Creates a new data item</li>
+      <li><strong>GET /api/data/:id</strong>: Retrieves a single data item by ID</li>
+      <li><strong>PUT /api/data/:id</strong>: Updates a single data item by ID</li>
+      <li><strong>DELETE /api/data/:id</strong>: Deletes a single data item by ID</li>
+    </ul>
+  </div>
+</body>
+</html>
